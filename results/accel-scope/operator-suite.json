@@ -1,0 +1,118 @@
+{
+  "configuration": {
+    "name": "scope-v8-banked4",
+    "l2_capacity_mib": 32,
+    "l3_capacity_mib": 384,
+    "cache_subpartitions_per_memory_channel": 4,
+    "steady_state_record": 2,
+    "power_scope": "cache hierarchy plus off-chip memory"
+  },
+  "operators": {
+    "ffn_decode_gemm": {
+      "trace": "inference_half_7680_1_2560_0_0 kernel-7/kernel-8",
+      "baseline": {
+        "latency_ns": 249470.0,
+        "operator_power_mw": 14682.360431,
+        "operator_energy_nj": 3662808.456607,
+        "l1_hit_rate": 0.007019,
+        "l2_hit_rate": 0.021347,
+        "l3_hit_rate": 0.0,
+        "dram_accesses": 1231027
+      },
+      "scope_banked4": {
+        "latency_ns": 212427.692308,
+        "operator_power_mw": 10819.386679,
+        "operator_energy_nj": 2298337.344457,
+        "l1_hit_rate": 0.006728,
+        "l2_hit_rate": 0.023524,
+        "l3_hit_rate": 0.999321,
+        "dram_accesses": 834
+      },
+      "latency_reduction_percent": 14.848401688379365,
+      "power_reduction_percent": 26.310304600912847,
+      "energy_reduction_percent": 37.25204657340892
+    },
+    "prefill_gemm": {
+      "trace": "inference_half_35_1500_2560_0_0 kernel-7/kernel-9",
+      "baseline": {
+        "latency_ns": 138881.538462,
+        "operator_power_mw": 7074.187911,
+        "operator_energy_nj": 982474.100416,
+        "l1_hit_rate": 0.880645,
+        "l2_hit_rate": 0.255743,
+        "l3_hit_rate": 0.0,
+        "dram_accesses": 246007
+      },
+      "scope_banked4": {
+        "latency_ns": 118990.769231,
+        "operator_power_mw": 2997.998791,
+        "operator_energy_nj": 356734.182335,
+        "l1_hit_rate": 0.886087,
+        "l2_hit_rate": 1.0,
+        "l3_hit_rate": 0.0,
+        "dram_accesses": 0
+      },
+      "latency_reduction_percent": 14.32211181649777,
+      "power_reduction_percent": 57.62059435347674,
+      "energy_reduction_percent": 63.69022021201869
+    },
+    "tensor_transform": {
+      "trace": "inference_half_35_1500_2560_0_0 kernel-5 repeated",
+      "baseline": {
+        "latency_ns": 143556.923077,
+        "operator_power_mw": 11672.452906,
+        "operator_energy_nj": 1675661.423878,
+        "l1_hit_rate": 0.0,
+        "l2_hit_rate": 0.0,
+        "l3_hit_rate": 0.0,
+        "dram_accesses": 540001
+      },
+      "scope_banked4": {
+        "latency_ns": 62253.076923,
+        "operator_power_mw": 4970.085468,
+        "operator_energy_nj": 309403.112967,
+        "l1_hit_rate": 0.0,
+        "l2_hit_rate": 1.0,
+        "l3_hit_rate": 0.0,
+        "dram_accesses": 0
+      },
+      "latency_reduction_percent": 56.63526663244994,
+      "power_reduction_percent": 57.4203853463806,
+      "energy_reduction_percent": 81.53546363495404
+    },
+    "splitk_reduce": {
+      "trace": "inference_half_35_1500_2560_0_0 kernel-8/kernel-10",
+      "baseline": {
+        "latency_ns": 9005.384615,
+        "operator_power_mw": 2163.446822,
+        "operator_energy_nj": 19482.670726,
+        "l1_hit_rate": 0.237802,
+        "l2_hit_rate": 1.0,
+        "l3_hit_rate": 0.0,
+        "dram_accesses": 0
+      },
+      "scope_banked4": {
+        "latency_ns": 8495.384615,
+        "operator_power_mw": 2425.316244,
+        "operator_energy_nj": 20603.994309,
+        "l1_hit_rate": 0.236368,
+        "l2_hit_rate": 1.0,
+        "l3_hit_rate": 0.0,
+        "dram_accesses": 0
+      },
+      "latency_reduction_percent": 5.663278380698013,
+      "power_reduction_percent": -12.104268953461718,
+      "energy_reduction_percent": -5.755492143608285
+    }
+  },
+  "ideal_memory_bounds": {
+    "ffn_decode_gemm": {
+      "latency_ns": 196513.076923,
+      "maximum_latency_reduction_percent": 21.22777210766826
+    },
+    "tensor_transform": {
+      "latency_ns": 50260.769231,
+      "maximum_latency_reduction_percent": 64.98896176254664
+    }
+  }
+}
