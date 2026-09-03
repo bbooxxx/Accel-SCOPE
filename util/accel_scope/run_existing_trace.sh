@@ -13,6 +13,7 @@ output_dir="${2:-$repo_root/results/accel-scope/raw}"
 simulator="$repo_root/gpu-simulator/bin/release/accel-sim.out"
 orin_config="$repo_root/gpu-simulator/gpgpu-sim/configs/tested-cfgs/SM87_ORIN/gpgpusim.config"
 trace_config="$repo_root/gpu-simulator/configs/tested-cfgs/SM87_ORIN/trace.config"
+power_model="$repo_root/gpu-simulator/gpgpu-sim/configs/tested-cfgs/SM75_RTX2060_S/accelwattch_sass_sim.xml"
 
 if [ ! -x "$simulator" ]; then
     echo "ERROR: build gpu-simulator/bin/release/accel-sim.out first." >&2
@@ -42,6 +43,7 @@ run_one() {
         -config "$orin_config"
         -config "$trace_config"
         -config "$cache_config"
+        -accelwattch_xml_file "$power_model"
     )
     if command -v timeout >/dev/null 2>&1; then
         timeout "${ACCEL_SCOPE_TIMEOUT:-2h}" "${command[@]}" \

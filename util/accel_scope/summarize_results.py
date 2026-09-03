@@ -41,6 +41,11 @@ def reduction(before: float, after: float) -> float:
     return 100.0 * (before - after) / before if before else 0.0
 
 
+def gpu_power_mw(record: dict[str, object]) -> float:
+    """Read the GPU-level field, with compatibility for older logs."""
+    return float(record.get("gpu_power_mw", record["operator_power_mw"]))
+
+
 def describe_change(name: str, reduction_percent: float) -> str:
     if reduction_percent >= 0:
         return f"{name}降低 {reduction_percent:.2f}%"
@@ -63,8 +68,8 @@ def main() -> int:
             float(baseline["latency_ns"]), float(scope["latency_ns"])
         ),
         "power_reduction_percent": reduction(
-            float(baseline["operator_power_mw"]),
-            float(scope["operator_power_mw"]),
+            gpu_power_mw(baseline),
+            gpu_power_mw(scope),
         ),
     }
     if args.json:
@@ -74,12 +79,12 @@ def main() -> int:
             encoding="utf-8",
         )
 
-    print("| 配置 | latency (ns) | power (mW) | L1 命中率 | L2 命中率 | L3 命中率 | DRAM 请求 |")
+    print("| 配置 | GPU latency (ns) | GPU power (mW) | L1 命中率 | L2 命中率 | L3 命中率 | DRAM 请求 |")
     print("|---|---:|---:|---:|---:|---:|---:|")
     for name, record in (("Orin SRAM", baseline), ("SCOPE 异构", scope)):
         print(
             f"| {name} | {float(record['latency_ns']):.3f} | "
-            f"{float(record['operator_power_mw']):.3f} | "
+            f"{gpu_power_mw(record):.3f} | "
             f"{100 * float(record['l1_hit_rate']):.2f}% | "
             f"{100 * float(record['l2_hit_rate']):.2f}% | "
             f"{100 * float(record['l3_hit_rate']):.2f}% | "
