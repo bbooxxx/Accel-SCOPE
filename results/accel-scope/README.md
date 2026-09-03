@@ -76,5 +76,5 @@ source ./gpu-simulator/setup_environment.sh release
 
 ## 后续探索
 
-第一版结果保持不变。后续 4-bank 配置和 4 算子比较见
-[《Accel-SCOPE 四算子缓存探索》](operator-suite.md)。
+第一版结果保持不变。后续 4-bank 配置和 3 个短算子比较见
+[《Accel-SCOPE 短算子仿真报告》](operator-suite.md)。

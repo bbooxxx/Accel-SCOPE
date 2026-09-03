@@ -1,6 +1,7 @@
 {
   "configuration": {
     "name": "scope-v8-banked4",
+    "baseline": "Jetson Orin L1/L2 SRAM without L3",
     "l2_capacity_mib": 32,
     "l3_capacity_mib": 384,
     "cache_subpartitions_per_memory_channel": 4,
@@ -8,111 +9,116 @@
     "power_scope": "cache hierarchy plus off-chip memory"
   },
   "operators": {
-    "ffn_decode_gemm": {
-      "trace": "inference_half_7680_1_2560_0_0 kernel-7/kernel-8",
+    "gemm_2048_64_2048": {
+      "benchmark": "gemm_bench-tencore train half 2048 64 2048 1 0",
+      "trace": "train_half_2048_64_2048_1_0 kernel-7/kernel-9",
+      "operation": "FP16 C = transpose(A) * B + C; M=2048, N=64, K=2048",
+      "simulation_seconds": {
+        "baseline": 340,
+        "scope_banked4": 349
+      },
       "baseline": {
-        "latency_ns": 249470.0,
-        "operator_power_mw": 14682.360431,
-        "operator_energy_nj": 3662808.456607,
-        "l1_hit_rate": 0.007019,
-        "l2_hit_rate": 0.021347,
+        "latency_cycles": 134688,
+        "latency_ns": 103606.153846,
+        "operator_power_mw": 9050.484335,
+        "operator_energy_nj": 937685.872371,
+        "l1_accesses": 557312,
+        "l1_hit_rate": 0.123536,
+        "l2_accesses": 509927,
+        "l2_hit_rate": 0.359469,
+        "l3_accesses": 0,
         "l3_hit_rate": 0.0,
-        "dram_accesses": 1231027
+        "dram_accesses": 283616
       },
       "scope_banked4": {
-        "latency_ns": 212427.692308,
-        "operator_power_mw": 10819.386679,
-        "operator_energy_nj": 2298337.344457,
-        "l1_hit_rate": 0.006728,
-        "l2_hit_rate": 0.023524,
-        "l3_hit_rate": 0.999321,
-        "dram_accesses": 834
+        "latency_cycles": 118905,
+        "latency_ns": 91465.384615,
+        "operator_power_mw": 2391.702725,
+        "operator_energy_nj": 218758.009669,
+        "l1_accesses": 557312,
+        "l1_hit_rate": 0.149374,
+        "l2_accesses": 495480,
+        "l2_hit_rate": 1.0,
+        "l3_accesses": 0,
+        "l3_hit_rate": 0.0,
+        "dram_accesses": 0
       },
-      "latency_reduction_percent": 14.848401688379365,
-      "power_reduction_percent": 26.310304600912847,
-      "energy_reduction_percent": 37.25204657340892
+      "latency_reduction_percent": 11.718193157759735,
+      "power_reduction_percent": 73.5737598511627
     },
-    "prefill_gemm": {
-      "trace": "inference_half_35_1500_2560_0_0 kernel-7/kernel-9",
+    "gemv_like_6144_4_2048": {
+      "benchmark": "gemm_bench-tencore inference half 6144 4 2048 0 0",
+      "trace": "inference_half_6144_4_2048_0_0 kernel-7/kernel-9",
+      "operation": "FP16 C = A * B + C; M=6144, N=4, K=2048",
+      "simulation_seconds": {
+        "baseline": 939,
+        "scope_banked4": 969
+      },
       "baseline": {
+        "latency_cycles": 196264,
+        "latency_ns": 150972.307692,
+        "operator_power_mw": 15601.178795,
+        "operator_energy_nj": 2355345.965333,
+        "l1_accesses": 847872,
+        "l1_hit_rate": 0.045101,
+        "l2_accesses": 809632,
+        "l2_hit_rate": 0.012845,
+        "l3_accesses": 0,
+        "l3_hit_rate": 0.0,
+        "dram_accesses": 790015
+      },
+      "scope_banked4": {
+        "latency_cycles": 184044,
+        "latency_ns": 141572.307692,
+        "operator_power_mw": 2486.843139,
+        "operator_energy_nj": 352068.122051,
+        "l1_accesses": 847872,
+        "l1_hit_rate": 0.045337,
+        "l2_accesses": 809432,
+        "l2_hit_rate": 1.0,
+        "l3_accesses": 0,
+        "l3_hit_rate": 0.0,
+        "dram_accesses": 0
+      },
+      "latency_reduction_percent": 6.2263074226678885,
+      "power_reduction_percent": 84.05990232098996
+    },
+    "gemm_35_1500_2560": {
+      "benchmark": "gemm_bench-tencore inference half 35 1500 2560 0 0",
+      "trace": "inference_half_35_1500_2560_0_0 kernel-7/kernel-9",
+      "operation": "FP16 C = A * B + C; M=35, N=1500, K=2560",
+      "simulation_seconds": {
+        "baseline": 631,
+        "scope_banked4": 626
+      },
+      "baseline": {
+        "latency_cycles": 180546,
         "latency_ns": 138881.538462,
         "operator_power_mw": 7074.187911,
         "operator_energy_nj": 982474.100416,
+        "l1_accesses": 2816470,
         "l1_hit_rate": 0.880645,
+        "l2_accesses": 366908,
         "l2_hit_rate": 0.255743,
+        "l3_accesses": 0,
         "l3_hit_rate": 0.0,
         "dram_accesses": 246007
       },
       "scope_banked4": {
+        "latency_cycles": 154688,
         "latency_ns": 118990.769231,
         "operator_power_mw": 2997.998791,
         "operator_energy_nj": 356734.182335,
+        "l1_accesses": 2816470,
         "l1_hit_rate": 0.886087,
+        "l2_accesses": 351618,
         "l2_hit_rate": 1.0,
+        "l3_accesses": 0,
         "l3_hit_rate": 0.0,
         "dram_accesses": 0
       },
       "latency_reduction_percent": 14.32211181649777,
-      "power_reduction_percent": 57.62059435347674,
-      "energy_reduction_percent": 63.69022021201869
-    },
-    "tensor_transform": {
-      "trace": "inference_half_35_1500_2560_0_0 kernel-5 repeated",
-      "baseline": {
-        "latency_ns": 143556.923077,
-        "operator_power_mw": 11672.452906,
-        "operator_energy_nj": 1675661.423878,
-        "l1_hit_rate": 0.0,
-        "l2_hit_rate": 0.0,
-        "l3_hit_rate": 0.0,
-        "dram_accesses": 540001
-      },
-      "scope_banked4": {
-        "latency_ns": 62253.076923,
-        "operator_power_mw": 4970.085468,
-        "operator_energy_nj": 309403.112967,
-        "l1_hit_rate": 0.0,
-        "l2_hit_rate": 1.0,
-        "l3_hit_rate": 0.0,
-        "dram_accesses": 0
-      },
-      "latency_reduction_percent": 56.63526663244994,
-      "power_reduction_percent": 57.4203853463806,
-      "energy_reduction_percent": 81.53546363495404
-    },
-    "splitk_reduce": {
-      "trace": "inference_half_35_1500_2560_0_0 kernel-8/kernel-10",
-      "baseline": {
-        "latency_ns": 9005.384615,
-        "operator_power_mw": 2163.446822,
-        "operator_energy_nj": 19482.670726,
-        "l1_hit_rate": 0.237802,
-        "l2_hit_rate": 1.0,
-        "l3_hit_rate": 0.0,
-        "dram_accesses": 0
-      },
-      "scope_banked4": {
-        "latency_ns": 8495.384615,
-        "operator_power_mw": 2425.316244,
-        "operator_energy_nj": 20603.994309,
-        "l1_hit_rate": 0.236368,
-        "l2_hit_rate": 1.0,
-        "l3_hit_rate": 0.0,
-        "dram_accesses": 0
-      },
-      "latency_reduction_percent": 5.663278380698013,
-      "power_reduction_percent": -12.104268953461718,
-      "energy_reduction_percent": -5.755492143608285
-    }
-  },
-  "ideal_memory_bounds": {
-    "ffn_decode_gemm": {
-      "latency_ns": 196513.076923,
-      "maximum_latency_reduction_percent": 21.22777210766826
-    },
-    "tensor_transform": {
-      "latency_ns": 50260.769231,
-      "maximum_latency_reduction_percent": 64.98896176254664
+      "power_reduction_percent": 57.62059435347674
     }
   }
 }
